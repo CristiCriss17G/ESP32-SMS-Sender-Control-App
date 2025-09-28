@@ -1,11 +1,27 @@
 {
-  "$schema": "../gen/schemas/desktop-schema.json",
-  "identifier": "default",
-  "description": "enables the default permissions",
-  "windows": [
-    "main"
-  ],
-  "permissions": [
-    "core:default"
-  ]
+	"$schema": "../gen/schemas/desktop-schema.json",
+	"identifier": "default",
+	"description": "enables the default permissions",
+	"windows": ["main"],
+	"permissions": [
+		"core:default",
+		"shell:default",
+		"shell:allow-open",
+		"log:default",
+		"log:allow-log",
+		"blec:default",
+		"blec:allow-scan",
+		"blec:allow-connect",
+		"blec:allow-connection-state",
+		"blec:allow-scanning-state",
+		"blec:allow-recv",
+		"blec:allow-recv-string",
+		"blec:allow-send",
+		"blec:allow-send-string",
+		"blec:allow-disconnect",
+		"blec:allow-stop-scan",
+		"blec:allow-subscribe",
+		"blec:allow-unsubscribe",
+		"blec:allow-subscribe-string"
+	]
 }
