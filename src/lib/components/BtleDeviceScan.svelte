@@ -55,15 +55,16 @@
 <ItemHeaderRow title="Scan for SMS Sender Devices" buttons={false} />
 
 <div class="card">
-	<section class="p-4">
+	<section class="py-4">
 		<Segment
+			classes="w-full"
 			name="btle-devices"
 			orientation="vertical"
 			value={selectedDevice?.address}
 			onValueChange={(e) => (selectedDevice = devices.find((d) => d.address === e.value) || null)}
 		>
 			{#each devices as device, i (device.address)}
-				<Segment.Item value={device.address}>
+				<Segment.Item classes="justify-start" value={device.address}>
 					<span>{i + 1}.</span>
 					<span class="flex-auto">{device.name} - {device.address}</span>
 				</Segment.Item>
@@ -96,7 +97,7 @@
 			>
 				Scan
 				{#if scanning}
-					<LoaderCircle class="me-3 inline h-4 w-4 animate-spin text-white" />
+					<LoaderCircle class="me-3 inline h-4 w-4 animate-spin dark:text-white" />
 				{/if}
 			</button>
 			{#if scanning}

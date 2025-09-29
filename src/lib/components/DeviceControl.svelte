@@ -168,7 +168,7 @@
 				{#if !wifiData}
 					<tr>
 						<td colspan="3" class="text-center">
-							<LoaderCircle class="me-3 inline h-4 w-4 animate-spin text-white" />
+							<LoaderCircle class="me-3 inline h-4 w-4 animate-spin dark:text-white" />
 						</td>
 					</tr>
 				{:else}
