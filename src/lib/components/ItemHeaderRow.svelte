@@ -40,7 +40,7 @@
 	<h2 class="h2">{title}</h2>
 	<div class="flex flex-col items-center justify-between gap-4 md:flex-row">
 		{#if buttons}
-			<div class="variant-filled btn-group">
+			<div class="btn-group preset-filled">
 				{#if classicButtons}
 					<button onclick={editAction}>Edit</button>
 					{#if deleteAction}

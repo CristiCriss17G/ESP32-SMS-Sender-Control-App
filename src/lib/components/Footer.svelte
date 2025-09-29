@@ -19,7 +19,7 @@
 <footer class="grid grid-cols-3 p-4">
 	<div class="flex items-center justify-center p-1">
 		<button
-			class="variant-filled-secondary btn w-full md:w-1/2 lg:w-1/3"
+			class="btn w-full preset-tonal-secondary md:w-1/2 lg:w-1/3"
 			disabled={!footerState.backActive}
 			onclick={goToScan}>Back</button
 		>
@@ -29,7 +29,7 @@
 	</div>
 	<div class="flex items-center justify-center p-1">
 		<button
-			class="variant-filled-primary btn w-full md:w-1/2 lg:w-1/3"
+			class="btn w-full preset-tonal-primary md:w-1/2 lg:w-1/3"
 			disabled={!footerState.nextActive}
 			onclick={goToDeviceControl}>Next</button
 		>

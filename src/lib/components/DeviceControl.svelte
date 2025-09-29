@@ -153,7 +153,7 @@
 <div class="card p-4">
 	<div class="flex items-center justify-between">
 		<p class="mb-0">WiFi Data:</p>
-		<button class="variant-outline-primary btn" onclick={readSettings}> Read WiFi Data </button>
+		<button class="btn preset-outlined-primary-500" onclick={readSettings}> Read WiFi Data </button>
 	</div>
 	<div class="table-container mt-2">
 		<table class="table-compact table">
@@ -209,8 +209,8 @@
 		/>
 	</label>
 	<div class="mt-6 flex items-center justify-end gap-x-6">
-		<button class="variant-filled-secondary btn" type="reset"> Reset </button>
-		<button class="variant-filled-primary btn" onclick={handleSubmit} type="submit">
+		<button class="btn preset-filled-secondary-500" type="reset"> Reset </button>
+		<button class="btn preset-filled-primary-500" onclick={handleSubmit} type="submit">
 			Update
 		</button>
 	</div>

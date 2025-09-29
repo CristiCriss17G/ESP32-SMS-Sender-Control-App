@@ -87,7 +87,7 @@
 					'!justify-center',
 					'p-2',
 					'disabled:cursor-not-allowed',
-					'variant-filled-primary',
+					'preset-tonal-primary',
 					scanning && ['border-e', 'border-solid', 'border-e-primary-100-900'],
 					'gap-1'
 				]}
@@ -100,7 +100,7 @@
 				{/if}
 			</button>
 			{#if scanning}
-				<button type="button" class="btn-control variant-filled-secondary" onclick={stopScan}>
+				<button type="button" class="btn-control preset-tonal-secondary" onclick={stopScan}>
 					Stop scan
 				</button>
 			{/if}
