@@ -53,6 +53,14 @@ jobs:
         with:
           workspaces: './src-tauri -> target'
 
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
       - name: install frontend dependencies
         # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
         run: bun install --frozen-lockfile
@@ -81,5 +89,5 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: tauri-app
-          path: src-tauri/target/release/bundle
+          name: tauri-app-${{ matrix.platform }}-${{ github.job}}
+          path: src-tauri/target/**/release/bundle
