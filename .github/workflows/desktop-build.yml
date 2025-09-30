@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - dev
 
 jobs:
   publish-tauri:
@@ -65,7 +66,7 @@ jobs:
           args: ${{ matrix.args }}
 
       - name: build app
-        if: github.ref != 'refs/heads/main' # Don't build the app if we already did it in the previous step.
+        if: github.ref == 'refs/heads/dev' # Don't build the app if we already did it in the previous step.
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
