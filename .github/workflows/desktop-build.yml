@@ -51,7 +51,9 @@ jobs:
         # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
         run: bun install --frozen-lockfile
 
-      - uses: tauri-apps/tauri-action@v0
+      - name: build and release app
+        if: github.ref == 'refs/heads/main' # Only publish releases from the main branch.
+        uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -61,3 +63,17 @@ jobs:
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
+
+      - name: build app
+        if: github.ref != 'refs/heads/main' # Don't build the app if we already did it in the previous step.
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: ${{ matrix.args }}
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tauri-app
+          path: target/release/bundle
