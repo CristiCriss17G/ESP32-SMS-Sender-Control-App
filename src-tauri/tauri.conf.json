@@ -1,7 +1,7 @@
 {
 	"$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
 	"productName": "ESP32 SMS Sender Control App",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"identifier": "ro.stuckinaloop.esp32-sms-sender-control-app",
 	"build": {
 		"frontendDist": "../build",
@@ -25,6 +25,9 @@
 	},
 	"bundle": {
 		"active": true,
+		"android": {
+			"minSdkVersion": 30
+		},
 		"targets": "all",
 		"icon": [
 			"icons/32x32.png",

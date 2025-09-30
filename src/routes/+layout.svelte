@@ -2,7 +2,8 @@
 	import '../app.css';
 	import { onNavigate } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import favicon from '$lib/assets/favicon.svg';
+	import logo from '$lib/assets/app-icon.png?enhanced';
+	import favicon from '$lib/assets/favicon.ico';
 	import Footer from '$lib/components/Footer.svelte';
 	import { toaster } from '$lib/stores/toaster-svelte';
 	import { AppBar } from '@skeletonlabs/skeleton-svelte';
@@ -36,8 +37,9 @@
 		<!-- App Bar -->
 		<AppBar>
 			{#snippet lead()}
-				<a href={resolve('/')} class="flex items-center space-x-2">
-					<h1 class="text-xl font-bold uppercase">ESP32 SMS Sender Control App</h1>
+				<a href={resolve('/')} class="mt-4 flex items-center space-x-2 md:mt-0">
+					<enhanced:img src={logo} alt="App Logo" class="logo" />
+					<h1 class="text-base font-bold uppercase md:text-xl">ESP32 SMS Sender Control App</h1>
 				</a>
 			{/snippet}
 		</AppBar>
@@ -97,5 +99,10 @@
 
 	header {
 		view-transition-name: header;
+	}
+
+	.logo {
+		height: 2.5rem;
+		width: 2.5rem;
 	}
 </style>
