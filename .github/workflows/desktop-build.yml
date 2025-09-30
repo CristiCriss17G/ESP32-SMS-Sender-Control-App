@@ -7,6 +7,11 @@ on:
       - main
       - dev
 
+env:
+  PUBLIC_SERVICE_UUID: ${{ vars.PUBLIC_SERVICE_UUID }}
+  PUBLIC_READ_WRITE_CHARACTERISTIC_UUID: ${{ vars.PUBLIC_READ_WRITE_CHARACTERISTIC_UUID }}
+  PUBLIC_NOTIFY_CHARACTERISTIC_UUID: ${{ vars.PUBLIC_NOTIFY_CHARACTERISTIC_UUID }}
+
 jobs:
   publish-tauri:
     permissions:
