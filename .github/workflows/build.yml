@@ -232,7 +232,7 @@ jobs:
           name: android-artifacts
           path: android-release
 
-      - name: Upload Android APK to release
+      - name: Upload Android artifacts to release
         uses: actions/github-script@v8
         env:
           release_id: ${{ needs.create-release.outputs.release_id }}
@@ -240,42 +240,43 @@ jobs:
           script: |
             const fs = require('fs');
             const path = require('path');
-            const glob = require('glob');
 
-            // Find APK files
-            const apkFiles = glob.sync('android-release/**/*.apk');
-
-            for (const apkFile of apkFiles) {
-              const fileName = path.basename(apkFile);
-              const fileContent = fs.readFileSync(apkFile);
+            // Function to recursively find files with specific extensions
+            function findFiles(dir, extensions) {
+              const files = [];
               
-              await github.rest.repos.uploadReleaseAsset({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                release_id: process.env.release_id,
-                name: fileName,
-                data: fileContent,
-              });
+              function searchDir(currentDir) {
+                const items = fs.readdirSync(currentDir);
+                
+                for (const item of items) {
+                  const fullPath = path.join(currentDir, item);
+                  const stat = fs.statSync(fullPath);
+                  
+                  if (stat.isDirectory()) {
+                    searchDir(fullPath);
+                  } else if (extensions.some(ext => item.endsWith(ext))) {
+                    files.push(fullPath);
+                  }
+                }
+              }
               
-              console.log(`Uploaded ${fileName} to release`);
+              if (fs.existsSync(dir)) {
+                searchDir(dir);
+              }
+              
+              return files;
             }
 
-      - name: Upload Android AAB to release
-        uses: actions/github-script@v8
-        env:
-          release_id: ${{ needs.create-release.outputs.release_id }}
-        with:
-          script: |
-            const fs = require('fs');
-            const path = require('path');
-            const glob = require('glob');
+            // Find APK and AAB files
+            const androidFiles = findFiles('android-release', ['.apk', '.aab']);
 
-            // Find AAB files
-            const aabFiles = glob.sync('android-release/**/*.aab');
+            console.log(`Found ${androidFiles.length} Android files to upload`);
 
-            for (const aabFile of aabFiles) {
-              const fileName = path.basename(aabFile);
-              const fileContent = fs.readFileSync(aabFile);
+            for (const androidFile of androidFiles) {
+              const fileName = path.basename(androidFile);
+              const fileContent = fs.readFileSync(androidFile);
+              
+              console.log(`Uploading ${fileName} (${fileContent.length} bytes)`);
               
               await github.rest.repos.uploadReleaseAsset({
                 owner: context.repo.owner,
@@ -285,7 +286,7 @@ jobs:
                 data: fileContent,
               });
               
-              console.log(`Uploaded ${fileName} to release`);
+              console.log(`Successfully uploaded ${fileName} to release`);
             }
 
       - name: publish release
