@@ -15,6 +15,7 @@ const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
 export default defineConfig(
 	includeIgnoreFile(gitignorePath),
 	globalIgnores(['./src-tauri/target/**']),
+	globalIgnores(['./src-tauri/gen/android/**/build']),
 	js.configs.recommended,
 	...ts.configs.recommended,
 	...svelte.configs.recommended,

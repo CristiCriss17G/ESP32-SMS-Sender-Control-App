@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ESP32 SMS Sender Control App</string>
+    <string name="main_activity_title">ESP32 SMS Sender Control App</string>
+</resources>
