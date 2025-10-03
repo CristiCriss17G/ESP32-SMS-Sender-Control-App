@@ -137,6 +137,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: install dependencies
+        run: |
+          sudo apt update && sudo apt upgrade -y && sudo apt install -y build-essential gcc-multilib clang lld libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
