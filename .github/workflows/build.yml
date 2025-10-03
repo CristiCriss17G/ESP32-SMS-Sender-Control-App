@@ -239,7 +239,7 @@ jobs:
             const glob = require('glob');
 
             // Find APK files
-            const apkFiles = glob.sync('android-release/**/outputs/**/*.apk');
+            const apkFiles = glob.sync('android-release/**/*.apk');
 
             for (const apkFile of apkFiles) {
               const fileName = path.basename(apkFile);
@@ -267,7 +267,7 @@ jobs:
             const glob = require('glob');
 
             // Find AAB files
-            const aabFiles = glob.sync('android-release/**/outputs/**/*.aab');
+            const aabFiles = glob.sync('android-release/**/*.aab');
 
             for (const aabFile of aabFiles) {
               const fileName = path.basename(aabFile);
