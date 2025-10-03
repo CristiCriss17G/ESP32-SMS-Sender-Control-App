@@ -196,7 +196,7 @@ jobs:
         run: |
           cd src-tauri/gen/android
           echo "keyAlias=${{ secrets.TAURI_ANDROID_KEY_ALIAS }}" > keystore.properties
-          echo "password=${{ secrets.TAURI_ANDROID_KEY_PASSWORD }}" >> keystore.properties
+          echo "keyPassword=${{ secrets.TAURI_ANDROID_KEY_PASSWORD }}" >> keystore.properties
           echo "storePassword=${{ secrets.TAURI_ANDROID_KEY_PASSWORD }}" >> keystore.properties
           base64 -d <<< "${{ secrets.TAURI_ANDROID_KEYSTORE_BASE64 }}" > $RUNNER_TEMP/keystore.jks
           echo "storeFile=$RUNNER_TEMP/keystore.jks" >> keystore.properties
