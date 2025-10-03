@@ -1,4 +1,4 @@
-name: "publish"
+name: 'build'
 
 on:
   workflow_dispatch:
@@ -56,18 +56,18 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: "macos-latest" # for Arm based macs (M1 and above).
-            args: "--target aarch64-apple-darwin"
+          - platform: 'macos-latest' # for Arm based macs (M1 and above).
+            args: '--target aarch64-apple-darwin'
             target: aarch64-apple-darwin
-          - platform: "macos-latest" # for Intel based macs.
-            args: "--target x86_64-apple-darwin"
+          - platform: 'macos-latest' # for Intel based macs.
+            args: '--target x86_64-apple-darwin'
             target: x86_64-apple-darwin
-          - platform: "ubuntu-latest"
-            args: ""
+          - platform: 'ubuntu-latest'
+            args: ''
             target: x86_64-unknown-linux-gnu
-          - platform: "windows-latest"
+          - platform: 'windows-latest'
             target: x86_64-pc-windows-msvc
-            args: ""
+            args: ''
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -91,7 +91,7 @@ jobs:
       - name: Rust cache
         uses: swatinem/rust-cache@v2
         with:
-          workspaces: "./src-tauri -> target"
+          workspaces: './src-tauri -> target'
 
       - name: Cache node_modules
         uses: actions/cache@v4
@@ -144,12 +144,12 @@ jobs:
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable # Set this to dtolnay/rust-toolchain@nightly
         with:
-          targets: "aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android"
+          targets: 'aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android'
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
         with:
-          workspaces: "./src-tauri -> target"
+          workspaces: './src-tauri -> target'
 
       - name: Cache node_modules
         uses: actions/cache@v4
@@ -169,7 +169,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: '17'
 
       # Android SDK (cmdline-tools) + accept licenses
       - name: Setup Android SDK
@@ -179,6 +179,8 @@ jobs:
           log-accepted-android-sdk-licenses: false
 
       - name: Install SDK/NDK components
+        env:
+          NDK_VERSION: '29.0.14033849'
         run: |
           yes | sdkmanager --licenses
           sdkmanager "platform-tools" \
@@ -186,8 +188,9 @@ jobs:
                      "build-tools;36.1.0" \
                      "build-tools;36.0.0" \
                      "build-tools;35.0.1" \
-                     "ndk;29.0.14033849" \
+                     "ndk;$NDK_VERSION" \
                      "cmake;4.1.1"
+          echo "NDK_HOME=$ANDROID_SDK_ROOT/ndk/$NDK_VERSION" >> $GITHUB_ENV
 
       - name: setup Android signing
         run: |
