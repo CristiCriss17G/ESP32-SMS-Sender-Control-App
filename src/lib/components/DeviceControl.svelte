@@ -101,8 +101,7 @@
 					title: `Status: ${data}`
 				});
 				readyForRestart = readyForRestart ? readyForRestart : data.includes('NR');
-				console.log(readyForRestart);
-				console.log(data);
+				debug(`Needs restart: ${needsRestart}, Ready for restart: ${readyForRestart}`);
 				if (needsRestart && readyForRestart) {
 					restartModal();
 				}

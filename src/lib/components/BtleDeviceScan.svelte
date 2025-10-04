@@ -7,6 +7,7 @@
 	import { LoaderCircle } from '@lucide/svelte';
 	import { getScanningUpdates, startScan, stopScan } from '@mnlphlp/plugin-blec';
 	import { Segment } from '@skeletonlabs/skeleton-svelte';
+	import { message } from '@tauri-apps/plugin-dialog';
 	import { debug } from '@tauri-apps/plugin-log';
 	import { onMount } from 'svelte';
 
@@ -26,17 +27,27 @@
 	};
 	let selectedDevice: BleDevice | null = $state(null);
 
+	let stopTimeout: NodeJS.Timeout;
 	const doScan = async () => {
 		devices.length = 0;
 		selectedDevice = null;
 		await startScan(handler, 10000);
-		setTimeout(stopScan, 10000);
+		stopTimeout = setTimeout(stopScan, 10000);
 	};
 
 	onMount(async () => {
 		await doScan();
 		await getScanningUpdates((s) => {
 			scanning = s;
+			if (!s) {
+				clearTimeout(stopTimeout);
+				if (devices.length === 0) {
+					message(
+						'No SMS Sender devices were found during the scan. Please make sure the device is powered on and in range, then try again.',
+						{ kind: 'warning', title: 'No Devices Found' }
+					);
+				}
+			}
 		});
 	});
 	$effect(() => {

@@ -4,7 +4,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { z } from 'zod';
 
 export async function getSelectedDevice() {
-	return (await invoke('get_selected_device')) as BleDevice;
+	return await invoke<BleDevice>('get_selected_device');
 }
 
 export async function setSelectedDevice(device: BleDevice | null) {
