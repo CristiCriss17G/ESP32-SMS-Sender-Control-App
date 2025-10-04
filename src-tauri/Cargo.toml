@@ -2,7 +2,7 @@
 name = "esp32_sms_sender_control_app"
 version = "1.0.1"
 description = "A Tauri App"
-authors = ["you"]
+authors = ["Cristian Iordachescu <53430981+CristiCriss17G@users.noreply.github.com>"]
 license = ""
 repository = ""
 edition = "2021"

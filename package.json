@@ -1,5 +1,9 @@
 {
 	"name": "esp32-sms-sender-control-app",
+	"author": {
+		"name": "Cristian Iordachescu",
+		"email": "53430981+CristiCriss17G@users.noreply.github.com"
+	},
 	"private": true,
 	"version": "1.0.1",
 	"type": "module",
