@@ -44,7 +44,7 @@
 		"vite-plugin-devtools-json": "^1.0.0"
 	},
 	"dependencies": {
-		"@lucide/svelte": "^0.544.0",
+		"@lucide/svelte": "^0.545.0",
 		"@mnlphlp/plugin-blec": "^0.7.0",
 		"@tauri-apps/api": "^2.8.0",
 		"@tauri-apps/plugin-log": "~2",
