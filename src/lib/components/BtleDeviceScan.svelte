@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { BleDevice } from '@mnlphlp/plugin-blec';
 
+	import { page } from '$app/state';
 	import { PUBLIC_SERVICE_UUID } from '$env/static/public';
 	import { footerState } from '$lib/stores/footer.svelte';
 	import { setSelectedDevice } from '$lib/utils/btle';
@@ -35,21 +36,37 @@
 		stopTimeout = setTimeout(stopScan, 10000);
 	};
 
-	onMount(async () => {
-		await doScan();
-		await getScanningUpdates((s) => {
-			scanning = s;
-			if (!s) {
-				clearTimeout(stopTimeout);
-				if (devices.length === 0) {
-					message(
-						'No SMS Sender devices were found during the scan. Please make sure the device is powered on and in range, then try again.',
-						{ kind: 'warning', title: 'No Devices Found' }
-					);
+	let scanningCallbackActive = false;
+
+	onMount(() => {
+		scanningCallbackActive = true;
+		(async () => {
+			await doScan();
+			await getScanningUpdates((s) => {
+				if (!scanningCallbackActive) return;
+				scanning = s;
+				if (!s) {
+					clearTimeout(stopTimeout);
+					debug(`Scanning stopped - found ${devices.length} devices`);
+					if (devices.length === 0 && page.url.pathname === '/') {
+						message(
+							'No SMS Sender devices were found during the scan. Please make sure the device is powered on and in range, then try again.',
+							{ kind: 'warning', title: 'No Devices Found' }
+						);
+					}
 				}
-			}
-		});
+			});
+		})();
+		return () => {
+			scanningCallbackActive = false;
+			stopScan();
+			clearTimeout(stopTimeout);
+			selectedDevice = null;
+			devices.length = 0;
+			debug('Component unmounted, stopped scan and cleared devices list');
+		};
 	});
+
 	$effect(() => {
 		debug(`Devices: ${JSON.stringify($state.snapshot(devices))}`);
 		debug(`Scanning: ${JSON.stringify($state.snapshot(scanning))}`);

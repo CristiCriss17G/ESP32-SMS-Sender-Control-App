@@ -155,7 +155,7 @@
 		<button class="btn preset-outlined-primary-500" onclick={readSettings}> Read WiFi Data </button>
 	</div>
 	<div class="table-container mt-2">
-		<table class="table-compact table">
+		<table class="table-compact table table-auto">
 			<thead>
 				<tr>
 					<th>Connection status</th>
@@ -172,10 +172,57 @@
 					</tr>
 				{:else}
 					<tr>
-						<td>{wifiData.wifiStatus.connected}</td>
+						<td>{wifiData.wifi.connected}</td>
 						<td>{wifiData.settings.ssid}</td>
-						<td>{wifiData.wifiStatus.ipAddress}</td>
+						<td>{wifiData.wifi.ipAddress}</td>
 					</tr>
+				{/if}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="card p-4">
+	<div class="flex items-center justify-between">
+		<p class="mb-0">Additional Data:</p>
+	</div>
+	<div class="table-container mt-2">
+		<table class="table-compact table table-auto">
+			<thead>
+				<tr>
+					<th>Key</th>
+					<th>Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#if !wifiData}
+					<tr>
+						<td colspan="2" class="text-center">
+							<LoaderCircle class="me-3 inline h-4 w-4 animate-spin dark:text-white" />
+						</td>
+					</tr>
+				{:else}
+					{@const additionalData = Object.entries(wifiData).filter(
+						([key]) => key !== 'settings' && key !== 'wifi'
+					)}
+					{#if additionalData.length === 0}
+						<tr>
+							<td colspan="2" class="text-center opacity-60">No additional data available</td>
+						</tr>
+					{:else}
+						{#each additionalData as [key, value] (key)}
+							<tr>
+								<td class="font-medium">{key}</td>
+								<td>
+									{#if typeof value === 'object' && value !== null}
+										{JSON.stringify(value)}
+									{:else}
+										{value}
+									{/if}
+								</td>
+							</tr>
+						{/each}
+					{/if}
 				{/if}
 			</tbody>
 		</table>
