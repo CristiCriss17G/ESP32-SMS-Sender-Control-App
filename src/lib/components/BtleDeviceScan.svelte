@@ -1,13 +1,16 @@
 <script lang="ts">
 	import type { BleDevice } from '@mnlphlp/plugin-blec';
 
+	import { page } from '$app/state';
 	import { PUBLIC_SERVICE_UUID } from '$env/static/public';
 	import { footerState } from '$lib/stores/footer.svelte';
 	import { setSelectedDevice } from '$lib/utils/btle';
 	import { LoaderCircle } from '@lucide/svelte';
 	import { getScanningUpdates, startScan, stopScan } from '@mnlphlp/plugin-blec';
 	import { Segment } from '@skeletonlabs/skeleton-svelte';
+	import { message } from '@tauri-apps/plugin-dialog';
 	import { debug } from '@tauri-apps/plugin-log';
+	import { platform } from '@tauri-apps/plugin-os';
 	import { onMount } from 'svelte';
 
 	import ItemHeaderRow from './ItemHeaderRow.svelte';
@@ -26,19 +29,53 @@
 	};
 	let selectedDevice: BleDevice | null = $state(null);
 
+	let stopTimeout: NodeJS.Timeout;
 	const doScan = async () => {
 		devices.length = 0;
 		selectedDevice = null;
 		await startScan(handler, 10000);
-		setTimeout(stopScan, 10000);
+		stopTimeout = setTimeout(stopScan, 10000);
 	};
 
-	onMount(async () => {
-		await doScan();
-		await getScanningUpdates((s) => {
-			scanning = s;
-		});
+	let scanningCallbackActive = false;
+
+	onMount(() => {
+		scanningCallbackActive = true;
+		(async () => {
+			// if device is running windows or linux show a message that the user might need to first pair the device in settings, and then use the app to connect
+			const currentPlatform = platform();
+			if (currentPlatform === 'windows' || currentPlatform === 'linux') {
+				await message(
+					'Please make sure the device is paired in your system settings before using this app.',
+					{ kind: 'warning', title: 'Device Pairing Required' }
+				);
+			}
+			await doScan();
+			await getScanningUpdates((s) => {
+				if (!scanningCallbackActive) return;
+				scanning = s;
+				if (!s) {
+					clearTimeout(stopTimeout);
+					debug(`Scanning stopped - found ${devices.length} devices`);
+					if (devices.length === 0 && page.url.pathname === '/') {
+						message(
+							'No SMS Sender devices were found during the scan. Please make sure the device is powered on and in range, then try again.',
+							{ kind: 'warning', title: 'No Devices Found' }
+						);
+					}
+				}
+			});
+		})();
+		return () => {
+			scanningCallbackActive = false;
+			stopScan();
+			clearTimeout(stopTimeout);
+			selectedDevice = null;
+			devices.length = 0;
+			debug('Component unmounted, stopped scan and cleared devices list');
+		};
 	});
+
 	$effect(() => {
 		debug(`Devices: ${JSON.stringify($state.snapshot(devices))}`);
 		debug(`Scanning: ${JSON.stringify($state.snapshot(scanning))}`);
@@ -65,8 +102,8 @@
 		>
 			{#each devices as device, i (device.address)}
 				<Segment.Item classes="justify-start" value={device.address}>
-					<span>{i + 1}.</span>
-					<span class="flex-auto">{device.name} - {device.address}</span>
+					<span class="flex-shrink-0">{i + 1}.</span>
+					<span class="flex-auto text-wrap">{device.name} - {device.address}</span>
 				</Segment.Item>
 			{/each}
 		</Segment>
