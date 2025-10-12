@@ -23,6 +23,7 @@
 		"blec:allow-subscribe",
 		"blec:allow-unsubscribe",
 		"blec:allow-subscribe-string",
-		"dialog:default"
+		"dialog:default",
+		"os:default"
 	]
 }

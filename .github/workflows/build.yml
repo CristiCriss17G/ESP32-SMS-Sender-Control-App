@@ -184,7 +184,7 @@ jobs:
 
       - name: Install SDK/NDK components
         env:
-          NDK_VERSION: '29.0.14033849'
+          NDK_VERSION: '29.0.14206865'
         run: |
           yes | sdkmanager --licenses
           sdkmanager "platform-tools" \

@@ -154,7 +154,7 @@
 		<p class="mb-0">WiFi Data:</p>
 		<button class="btn preset-outlined-primary-500" onclick={readSettings}> Read WiFi Data </button>
 	</div>
-	<div class="table-container mt-2">
+	<div class="table-container mt-2 overflow-x-auto">
 		<table class="table-compact table table-auto">
 			<thead>
 				<tr>
@@ -186,7 +186,7 @@
 	<div class="flex items-center justify-between">
 		<p class="mb-0">Additional Data:</p>
 	</div>
-	<div class="table-container mt-2">
+	<div class="table-container mt-2 overflow-x-auto">
 		<table class="table-compact table table-auto">
 			<thead>
 				<tr>

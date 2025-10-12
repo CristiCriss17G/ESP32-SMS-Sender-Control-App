@@ -10,6 +10,7 @@
 	import { Segment } from '@skeletonlabs/skeleton-svelte';
 	import { message } from '@tauri-apps/plugin-dialog';
 	import { debug } from '@tauri-apps/plugin-log';
+	import { platform } from '@tauri-apps/plugin-os';
 	import { onMount } from 'svelte';
 
 	import ItemHeaderRow from './ItemHeaderRow.svelte';
@@ -41,6 +42,14 @@
 	onMount(() => {
 		scanningCallbackActive = true;
 		(async () => {
+			// if device is running windows or linux show a message that the user might need to first pair the device in settings, and then use the app to connect
+			const currentPlatform = platform();
+			if (currentPlatform === 'windows' || currentPlatform === 'linux') {
+				await message(
+					'Please make sure the device is paired in your system settings before using this app.',
+					{ kind: 'warning', title: 'Device Pairing Required' }
+				);
+			}
 			await doScan();
 			await getScanningUpdates((s) => {
 				if (!scanningCallbackActive) return;
@@ -93,8 +102,8 @@
 		>
 			{#each devices as device, i (device.address)}
 				<Segment.Item classes="justify-start" value={device.address}>
-					<span>{i + 1}.</span>
-					<span class="flex-auto">{device.name} - {device.address}</span>
+					<span class="flex-shrink-0">{i + 1}.</span>
+					<span class="flex-auto text-wrap">{device.name} - {device.address}</span>
 				</Segment.Item>
 			{/each}
 		</Segment>
