@@ -141,7 +141,7 @@
 
 <ItemHeaderRow title="Control device" buttons={false} />
 
-<h3 class="my-2 text-center h3">
+<h3 class="h3 my-2 text-center">
 	{#if connected}
 		Connected
 	{:else}
@@ -229,7 +229,7 @@
 	</div>
 </div>
 
-<form class="text-token my-4 w-full space-y-4 card p-4" action="">
+<form class="text-token card my-4 w-full space-y-4 p-4" action="">
 	<label for="deviceName" class="label">
 		<span>Device name</span>
 		<input type="text" class="input" name="deviceName" bind:value={formData.deviceName} />

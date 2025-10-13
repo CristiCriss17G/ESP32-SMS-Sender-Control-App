@@ -51,7 +51,7 @@
 			<Navigation />
 		</aside> -->
 		<!-- Page Route Content -->
-		<div class="overflow-x-hidden overflow-y-auto">
+		<div class="overflow-y-auto overflow-x-hidden">
 			<main class="container mx-auto p-10">
 				{@render children?.()}
 			</main>
