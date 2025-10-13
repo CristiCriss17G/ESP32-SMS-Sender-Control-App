@@ -5,7 +5,7 @@
       "name": "esp32-sms-sender-control-app",
       "dependencies": {
         "@lucide/svelte": "^0.545.0",
-        "@mnlphlp/plugin-blec": "^0.7.0",
+        "@mnlphlp/plugin-blec": "^0.8.0",
         "@tauri-apps/api": "^2.8.0",
         "@tauri-apps/plugin-dialog": "~2.4.0",
         "@tauri-apps/plugin-log": "~2.7.0",
@@ -198,7 +198,7 @@
 
     "@lucide/svelte": ["@lucide/svelte@0.545.0", "", { "peerDependencies": { "svelte": "^5" } }, "sha512-RlAtWefx9MdpXaOMbx3Qv3/NqpeZKOIPxN2D0RBN2+op0opKly8VgYEEWZTT6Ow/zf7UwyTg6/0ExJlsVLK+8g=="],
 
-    "@mnlphlp/plugin-blec": ["@mnlphlp/plugin-blec@0.7.0", "", { "dependencies": { "@tauri-apps/api": ">=2.0.0-beta.6" } }, "sha512-Vv4woUGhXBFWCaKQavfZQIqq+11Bs3PEv/NGSg7w42dZD01K/2Zr+kZuSsaQuE6JealHeF9MLPZTNfsBp9nonA=="],
+    "@mnlphlp/plugin-blec": ["@mnlphlp/plugin-blec@0.8.0", "", { "dependencies": { "@tauri-apps/api": ">=2.0.0-beta.6" } }, "sha512-KFcjgHkNi7poymIGbF+9VpmB2D9iEmPJKERiVaw2jDFO2dO5Om7kQ0JoYJZts59iT3qpNYUy8t5vtA6UOYcgFw=="],
 
     "@nodelib/fs.scandir": ["@nodelib/fs.scandir@2.1.5", "", { "dependencies": { "@nodelib/fs.stat": "2.0.5", "run-parallel": "^1.1.9" } }, "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="],
 
