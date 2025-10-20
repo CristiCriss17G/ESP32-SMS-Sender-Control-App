@@ -27,7 +27,7 @@ strip = true      # Ensures debug symbols are removed.
 # rustflags = ["-Zthreads=8"] # Better compile performance.
 
 [build-dependencies]
-tauri-build = { version = "2.4.1", features = [] }
+tauri-build = { version = "2.5.0", features = [] }
 
 [dependencies]
 serde_json = "1.0"
