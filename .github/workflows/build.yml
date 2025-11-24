@@ -21,7 +21,7 @@ jobs:
       release_id: ${{ steps.create-release.outputs.result }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -71,7 +71,7 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-latest' # This must match the platform value defined above.
@@ -135,7 +135,7 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: install dependencies
         run: |
@@ -224,7 +224,7 @@ jobs:
     needs: [create-release, build-desktop, build-android]
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Download Android artifacts
         uses: actions/download-artifact@v5
